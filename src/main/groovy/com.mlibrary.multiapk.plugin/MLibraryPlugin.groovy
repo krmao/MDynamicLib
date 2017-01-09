@@ -1,6 +1,6 @@
-package com.mlibrary.dynamic
+package com.mlibrary.multiapk.plugin
 
-import com.mlibrary.dynamic.util.MTextUtil
+import com.mlibrary.multiapk.plugin.util.MTextUtil
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -250,6 +250,7 @@ public class MLibraryPlugin implements Plugin<Project> {
         proGuard.injars(project.fileTree(libraryExtension.libsDirPath).include('*.jar'))
         proGuard.outjars("$project.buildDir/intermediates/classes-obfuscated/classes-obfuscated.jar")
 
+        proGuard.printmapping "$MApplicationExtension.instance.buildOutputPath/$libraryExtension.soName-mapping.txt"
         proGuard.configuration(libraryExtension.moduleProguardRulesFilePath)
         proGuard.configuration("$project.buildDir/intermediates/res/aapt-rules.txt")
 

@@ -1,6 +1,6 @@
-package com.mlibrary.dynamic
+package com.mlibrary.multiapk.plugin
 
-import com.mlibrary.dynamic.util.MTextUtil
+import com.mlibrary.multiapk.plugin.util.MTextUtil
 import org.gradle.api.Project;
 
 public class MLibraryExtension {

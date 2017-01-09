@@ -35,5 +35,5 @@ gradle plugin for ctrip [DynamicAPK](https://github.com/CtripMobile/DynamicAPK).
     }
 ```
 ###exambles
-https://github.com/mlibrarys/MDynamicHome
+https://github.com/multiapk/multiapk.examples
 ---

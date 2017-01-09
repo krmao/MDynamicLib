@@ -1,4 +1,4 @@
-package com.mlibrary.dynamic.util;
+package com.mlibrary.multiapk.plugin.util;
 
 public class MTextUtil {
     public static boolean isEmpty(CharSequence str) {

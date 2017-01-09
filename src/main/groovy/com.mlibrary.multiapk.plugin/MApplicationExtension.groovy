@@ -1,6 +1,6 @@
-package com.mlibrary.dynamic
+package com.mlibrary.multiapk.plugin
 
-import com.mlibrary.dynamic.util.MTextUtil
+import com.mlibrary.multiapk.plugin.util.MTextUtil
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.Project
 import org.gradle.api.file.ConfigurableFileCollection
