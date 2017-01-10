@@ -6,14 +6,14 @@ gradle plugin for ctrip [DynamicAPK](https://github.com/CtripMobile/DynamicAPK).
 ```
     jcenter()
     dependencies {
-        classpath 'com.mlibrary:dynamic:0.0.1'
+        classpath 'com.mlibrary:multiapk.plugin:0.0.1'
     }
 ```
 ```
     apply plugin: 'com.android.application'
-    apply plugin: 'com.mlibrary.dynamic.application'
+    apply plugin: 'com.mlibrary.multiapk.plugin.application'
 
-    dynamicApplication {
+    multiApkApplication {
         solidMode = project.solidMode
         buildToolsVersion = project.buildToolsVersion
         supportLibraryVersion = project.supportLibraryVersion
@@ -27,9 +27,9 @@ gradle plugin for ctrip [DynamicAPK](https://github.com/CtripMobile/DynamicAPK).
 ```
 ```
     apply plugin: 'com.android.library'
-    apply plugin: 'com.mlibrary.dynamic.library'
+    apply plugin: 'com.mlibrary.multiapk.plugin.library'
 
-    dynamicLibrary {
+    multiApkLibrary {
         packageName = "com.mctrip.modules.device"
         moduleProguardRulesFilePath = "$rootDir/gradle/dynamic/sub-project-proguard-rules.pro"
     }

@@ -8,8 +8,6 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
 group = "com.mlibrary"
-String mArtifactId = "multiapk.plugin"
-
 version = "0.0.1"
 
 dependencies {
@@ -47,14 +45,14 @@ publishing {
             artifact sourcesJar
             artifact javadocJar
 
-            groupId getGroup()
-            artifactId mArtifactId
+            groupId "com.mlibrary"
+            artifactId "multiapk-plugin"
             version version
 
             pom.withXml {
                 def root = asNode()
                 root.appendNode('description', 'gradle plugin for ctrip dynamicapk')
-                root.appendNode('name', "multiapk.plugin")
+                root.appendNode('name', "multiapk-plugin")
                 root.appendNode('url', 'https://github.com/multiapk/multiapk.plugin')
                 root.children().last() + pomConfig
             }
@@ -89,10 +87,11 @@ bintray {
             name = "stable"//稳定版
             //desc = 'gradle plugin for ctrip dynamicapk !!'
             vcsTag = '1.3.0'
-            attributes = ['gradle-plugin': 'com.mlibrary.multiapk.plugin.application ,com.mlibrary.multiapk.plugin.library']
+            attributes = ['gradle-plugin': 'com.mlibrary.multiapk.application ,com.mlibrary.multiapk.library']
         }
     }
 }
+
 
 task javadocJar(type: Jar, dependsOn: groovydoc) {
     classifier = 'javadoc'
@@ -113,13 +112,13 @@ artifacts {
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: uri("${rootDir}/MLibrarys/MRepo/uploadedArchives"))
+            repository(url: uri("uploadedArchives"))
             //repository(url: "http://dl.bintray.com/krmao/maven") {
             //    authentication(userName: project.bintrayUser, password: project.bintrayKey)
             //}
             pom.version = version
-            pom.artifactId = mArtifactId
-            pom.groupId = getGroup()
+            pom.artifactId = "multiapk-plugin"
+            pom.groupId = "com.mlibrary"
         }
     }
 }
