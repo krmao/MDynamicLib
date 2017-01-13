@@ -1,6 +1,5 @@
 package com.mlibrary.multiapk
 
-import com.mlibrary.multiapk.ApplicationExtension
 import com.mlibrary.multiapk.util.TextUtil
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.Plugin
@@ -131,7 +130,7 @@ public class ApplicationPlugin implements Plugin<Project> {
         Zip zip = project.tasks.create("dynamicReload", Zip.class);
 
         zip.inputs.file "$ApplicationExtension.instance.buildOutputPath/$ApplicationExtension.instance.buildOutputPrefix-base-release.apk"
-        zip.inputs.files project.fileTree(new File(ApplicationExtension.instance.buildOutputPath)).include('*.so')
+        zip.inputs.files project.fileTree(new File(ApplicationExtension.instance.buildOutputPath)).include("*$LibraryExtension.DEFAULT_APK_SUFFIX")
         //增加so文件输入
         zip.inputs.file project.fileTree(new File(ApplicationExtension.instance.buildOutputPath, 'jni'))
         zip.outputs.file "$ApplicationExtension.instance.buildOutputPath/$ApplicationExtension.instance.buildOutputPrefix-release-dynamicReloaded.apk"
@@ -139,7 +138,7 @@ public class ApplicationPlugin implements Plugin<Project> {
         zip.setDescription("dynamicReload task")
 
         zip.into('assets/baseres/') {
-            from project.fileTree(new File(ApplicationExtension.instance.buildOutputPath)).include('*.so')
+            from project.fileTree(new File(ApplicationExtension.instance.buildOutputPath)).include("*$LibraryExtension.DEFAULT_APK_SUFFIX")
         }
         zip.into('lib') {
             from project.fileTree(new File(ApplicationExtension.instance.buildOutputPath, 'jni'))

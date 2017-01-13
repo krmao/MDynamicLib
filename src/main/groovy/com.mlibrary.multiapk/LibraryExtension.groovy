@@ -16,7 +16,10 @@ public class LibraryExtension {
     public String androidManifestFilePath;
 
     public String parentModuleName;
-    public String soName;
+    public String apkName;
+    public String apkSuffix;
+
+    public static final String DEFAULT_APK_SUFFIX = ".zip";
 
     @Override
     public String toString() {
@@ -32,7 +35,8 @@ public class LibraryExtension {
                 "\n        resourceDirPath='" + resourceDirPath + '\'' +
                 "\n        androidManifestFilePath='" + androidManifestFilePath + '\'' +
                 "\n        parentModuleName='" + parentModuleName + '\'' +
-                "\n        soName='" + soName + '\'' +
+                "\n        apkName='" + apkName + '\'' +
+                "\n        apkSuffix='" + apkSuffix + '\'' +
                 '\n    }';
     }
 
@@ -43,7 +47,8 @@ public class LibraryExtension {
         libraryExtension.resourceDirPath = TextUtil.isEmpty(libraryExtension.resourceDirPath) ? "$libraryProject.projectDir/src/main/res" : libraryExtension.resourceDirPath
         libraryExtension.assetsDirPath = TextUtil.isEmpty(libraryExtension.assetsDirPath) ? "$libraryProject.projectDir/src/main/assets" : libraryExtension.assetsDirPath
         libraryExtension.androidManifestFilePath = TextUtil.isEmpty(libraryExtension.androidManifestFilePath) ? "$libraryProject.projectDir/src/main/AndroidManifest.xml" : libraryExtension.androidManifestFilePath
-        libraryExtension.soName = libraryExtension.packageName.replace('.', '_')
+        libraryExtension.apkSuffix = TextUtil.isEmpty(libraryExtension.apkSuffix) ? DEFAULT_APK_SUFFIX : libraryExtension.apkSuffix
+        libraryExtension.apkName = libraryExtension.packageName.replace('.', '_')
 
         println("$libraryProject.path:apply multiApkLibrary:initLibraryExtensionAfterEvaluate:\n" + libraryExtension.toString())
     }

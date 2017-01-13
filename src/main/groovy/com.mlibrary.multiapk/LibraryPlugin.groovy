@@ -194,15 +194,15 @@ public class LibraryPlugin implements Plugin<Project> {
 
         zip.inputs.file "$project.buildDir/intermediates/dex/${project.name}_dex.zip"
         zip.inputs.file "$project.buildDir/intermediates/res/resources.zip"
-        zip.outputs.file "$ApplicationExtension.instance.buildOutputPath/${libraryExtension.soName}.so"
+        zip.outputs.file "$ApplicationExtension.instance.buildOutputPath/${libraryExtension.apkName}${libraryExtension.apkSuffix}"
 
-        zip.archiveName = "${libraryExtension.soName}.so"
+        zip.archiveName = "${libraryExtension.apkName}${libraryExtension.apkSuffix}"
         zip.destinationDir = project.file(ApplicationExtension.instance.buildOutputPath)
         zip.duplicatesStrategy = "fail"
         zip.from project.zipTree("$project.buildDir/intermediates/dex/${project.name}_dex.zip")
         zip.from project.zipTree("$project.buildDir/intermediates/res/resources.zip")
         zip.doLast {
-            assert new File("$ApplicationExtension.instance.buildOutputPath/${libraryExtension.soName}.so").exists()
+            assert new File("$ApplicationExtension.instance.buildOutputPath/${libraryExtension.apkName}${libraryExtension.apkSuffix}").exists()
         }
         zip.dependsOn "dynamicDexRelease"
         project.logger.info("$project.path:configureBundleReleaseTask:end")
@@ -242,7 +242,7 @@ public class LibraryPlugin implements Plugin<Project> {
         proGuard.inputs.files project.fileTree("$project.buildDir/gen/r").include('**/*.java')
         proGuard.inputs.dir "$project.buildDir/intermediates/classes"
         proGuard.outputs.file "$project.buildDir/intermediates/classes-obfuscated/classes-obfuscated.jar"
-        proGuard.outputs.file "$ApplicationExtension.instance.buildOutputPath/$libraryExtension.soName-mapping.txt"
+        proGuard.outputs.file "$ApplicationExtension.instance.buildOutputPath/$libraryExtension.apkName-mapping.txt"
         if (parentModuleJar != null)
             proGuard.inputs.file parentModuleJar
 
@@ -250,7 +250,7 @@ public class LibraryPlugin implements Plugin<Project> {
         proGuard.injars(project.fileTree(libraryExtension.libsDirPath).include('*.jar'))
         proGuard.outjars("$project.buildDir/intermediates/classes-obfuscated/classes-obfuscated.jar")
 
-        proGuard.printmapping "$ApplicationExtension.instance.buildOutputPath/$libraryExtension.soName-mapping.txt"
+        proGuard.printmapping "$ApplicationExtension.instance.buildOutputPath/$libraryExtension.apkName-mapping.txt"
         proGuard.configuration(libraryExtension.moduleProguardRulesFilePath)
         proGuard.configuration("$project.buildDir/intermediates/res/aapt-rules.txt")
 
@@ -346,12 +346,12 @@ public class LibraryPlugin implements Plugin<Project> {
         }
 
         println "$project.path:dynamicAaptRelease:packageName==$packageName"
+        println "$project.path:dynamicAaptRelease:inputRFile==$inputRFile"
 
         dynamicAaptRelease.inputs.file inputRFile
         dynamicAaptRelease.outputs.dir "$project.buildDir/gen/r"
         dynamicAaptRelease.outputs.file "$project.buildDir/intermediates/res/resources.zip"
         dynamicAaptRelease.outputs.file "$project.buildDir/intermediates/res/aapt-rules.txt"
-
         dynamicAaptRelease.doFirst {
             project.logger.info("$project.path:dynamicAaptRelease:doFirst")
 
@@ -366,6 +366,32 @@ public class LibraryPlugin implements Plugin<Project> {
                     println "$project.path:dynamicAaptRelease:dynamicAaptRelease apk_module_config:[packageName:" + module.@packageName + "],[resourceId:$resourceId]"
                 }
             }
+
+            project.logger.info("$project.path:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+            dynamicAaptRelease.inputs.each {
+                it.getFiles().each { item ->
+                    println "$project.path:dynamicAaptRelease:inputs==$item"
+                }
+            }
+            dynamicAaptRelease.outputs.each {
+                it.getFiles().each { item ->
+                    println "$project.path:dynamicAaptRelease:inputs==$item"
+                }
+            }
+            println "$project.path:dynamicAaptRelease: androidJar = $ApplicationExtension.instance.androidJar"
+            println "$project.path:dynamicAaptRelease: buildOutputBaseApkFilePath = $ApplicationExtension.instance.buildOutputBaseApkFilePath"
+            println "$project.path:dynamicAaptRelease: parentProject = $ApplicationExtension.instance.buildOutputBaseApkFilePath"
+            println "$project.path:dynamicAaptRelease: androidManifestFilePath = $libraryExtension.androidManifestFilePath"
+            println "$project.path:dynamicAaptRelease: resourceDirPath = $libraryExtension.resourceDirPath"
+            println "$project.path:dynamicAaptRelease: r = $project.buildDir/gen/r"
+            println "$project.path:dynamicAaptRelease: resources = $project.buildDir/intermediates/res/resources.zip"
+            println "$project.path:dynamicAaptRelease: aapt-rules = $project.buildDir/intermediates/res/aapt-rules.txt"
+            println "$project.path:dynamicAaptRelease: custom-package = $libraryExtension.packageName"
+            println "$project.path:dynamicAaptRelease: public-R-path = $inputRFile"
+            println "$project.path:dynamicAaptRelease: resourceId==$resourceId"
+            println "$project.path:dynamicAaptRelease: packageName = $packageName"
+            project.logger.info("$project.path:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+
             def argv = []
             argv << 'package' //打包
             argv << "-v"
