@@ -53,7 +53,7 @@ publishing {
                 def root = asNode()
                 root.appendNode('description', 'gradle plugin for ctrip dynamicapk')
                 root.appendNode('name', "multiapk-plugin")
-                root.appendNode('url', 'https://github.com/multiapk/multiapk.plugin')
+                root.appendNode('url', 'https://github.com/multiapk/multiapk-plugin')
                 root.children().last() + pomConfig
             }
         }
@@ -71,15 +71,15 @@ bintray {
 
     pkg {
         repo = 'maven'
-        name = "multiapk.plugin"
+        name = "multiapk-plugin"
         userOrg = bintrayUser
         licenses = ['Apache-2.0']
-        websiteUrl = 'https://github.com/multiapk/multiapk.plugin'
-        vcsUrl = 'https://github.com/multiapk/multiapk.plugin.git'
-        issueTrackerUrl = 'https://github.com/multiapk/multiapk.plugin/issues'
+        websiteUrl = 'https://github.com/multiapk/multiapk-plugin'
+        vcsUrl = 'https://github.com/multiapk/multiapk-plugin.git'
+        issueTrackerUrl = 'https://github.com/multiapk/multiapk-plugin/issues'
         labels = ['dynamic', 'android', 'hotfix']
         publicDownloadNumbers = true
-        githubRepo = 'https://github.com/multiapk/multiapk.plugin' //Optional Github repository
+        githubRepo = 'https://github.com/multiapk/multiapk-plugin' //Optional Github repository
         githubReleaseNotesFile = 'README.md' //Optional Github readme file
 
         version {
